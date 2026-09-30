@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:16.6
+    container_name: activity-service-db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: 1Pass2word3
+      POSTGRES_DB: activity-service-db
+    ports:
+      - "5433:5432"
+    volumes:
+      - activity-service-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U user -d activity-service-db" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  activity-service-db-data:
